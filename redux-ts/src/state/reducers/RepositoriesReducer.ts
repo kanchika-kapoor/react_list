@@ -2,13 +2,19 @@ import { ActionTypes } from "../action-types"
 import { Action } from "../actions"
 
 
-interface RepositioriesState {
+export interface RepositioriesState {
     loading: boolean
     error: string | null
     data: string[]
 }
 
-const reducer = (state: RepositioriesState, action: Action):RepositioriesState=>{
+const initialState:RepositioriesState = {
+    loading: false,
+    error: null,
+    data: []
+}
+
+const reducer = (state: RepositioriesState = initialState, action: Action):RepositioriesState=>{
     // type guard
     switch (action.type) {
         case ActionTypes.SEARCH_REPOSITORIES:

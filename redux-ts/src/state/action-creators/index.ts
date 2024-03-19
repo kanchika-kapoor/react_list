@@ -3,6 +3,12 @@ import { ActionTypes } from "../action-types"
 import { Action } from "../actions"
 import { Dispatch } from "redux"
 
+interface resultJson{
+    package:{
+        name: string
+    }
+}
+
 export const SearchRepositories = (term: string) =>{
     return async (dispatch: Dispatch<Action>)=>{
         dispatch({
@@ -12,7 +18,7 @@ export const SearchRepositories = (term: string) =>{
         try{
             const {data} = await axios.get('https://registry.npmjs.org/-/v1/search', {params:{text: term}})
 
-            const names: string[] = data.map((res)=>{
+            const names: string[] = data.map((res:resultJson)=>{
                 return res.package.name
             })
 
