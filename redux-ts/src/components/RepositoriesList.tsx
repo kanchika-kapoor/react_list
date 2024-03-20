@@ -1,11 +1,11 @@
 import {useState} from 'react'
-import { useSelector } from 'react-redux'
+import { useTypedSelector } from '../hooks/useTypedSelector'
 import { useActions } from '../hooks/useActions'
 
 const RepositoriesList:React.FC = ()=>{
     const [term, setTerm] = useState('')
     const { SearchRepositories } = useActions()
-    const {data, error, loading} = useSelector(state=> state.repositories)
+    const {data, error, loading} = useTypedSelector(state=> state.repositories)
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
@@ -20,6 +20,11 @@ const RepositoriesList:React.FC = ()=>{
                 }/>
                 <button>Search</button>
             </form>
+            {error && <h3>{error}</h3>}
+            {loading && <h3>Loading...</h3>}
+            {!error && !loading && (<ul>
+                {data.map((name:string)=>{return <li key={name}>{name}</li>})}
+                </ul>)}
         </div>
     )
 }
